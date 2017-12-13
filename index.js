@@ -5,7 +5,7 @@ window.onload = function () {
         event = document.getElementById('tch-event'),
         result = document.getElementById('tch-result');
 
-    touch.config = {
+    var config = {
         tap: true, //tap类事件开关, 默认为true
         doubleTap: false, //doubleTap事件开关， 默认为true
         hold: false, //hold事件开关, 默认为true
@@ -19,8 +19,10 @@ window.onload = function () {
         drag: false, //drag事件开关
         pinch: false, //pinch类事件开关
     }
+    reset();
 
     touch.on('.tch-ctrl', 'tap', function (e) {
+        reset();
         if (e.target.tagName !== 'A') return;
         var actEle = document.querySelector('.active');
         actEle && (actEle.className = '');
@@ -34,44 +36,99 @@ window.onload = function () {
     })
 
     /*
+     * tap
+     */
+    touch.on(target, 'tap', function (e) {
+        if (!touch.config.hold) return false;
+        result.innerHTML = '你敲击了图片一下';
+    });
+
+    /*
+     * doubleTap
+     */
+    touch.on(target, 'doubleTap', function (e) {
+        if (!touch.config.doubleTap) return false;
+        result.innerHTML = '你连续敲击了图片两下';
+    });
+
+    /*
+     * hold
+     */
+    touch.on(target, 'hold', function (e) {
+        if (!touch.config.hold) return false;
+        result.innerHTML = '你按住了图片';
+    });
+    touch.on(target, 'touchend', function (e) {
+        if (!touch.config.hold) return false;
+        result.innerHTML = '你放开了图片';
+    });
+
+    /*
      * rotate
      */
-    var angle = 0;
-    touch.on(target, 'touchstart', function (ev) {
-        ev.startRotate();
-        ev.preventDefault();
-    });
-    touch.on(target, 'rotate', function (ev) {
-        if (!touch.config.rotate) return false;
-        var totalAngle = angle + (ev.rotation || 0);
-        if (ev.fingerStatus === 'end') {
-            angle = angle + ev.rotation;
-        }
-        result.innerHTML = '你旋转了：' + angle + '°';
-        this.style.webkitTransform = 'rotate(' + totalAngle + 'deg)';
-        angle = 0;
-    });
+    // var angle = 0;
+    // touch.on(target, 'touchstart', function (ev) {
+    //     ev.startRotate();
+    //     ev.preventDefault();
+    // });
+    // touch.on(target, 'rotate', function (ev) {
+    //     if (!touch.config.rotate) return false;
+    //     var totalAngle = angle + (ev.rotation || 0);
+    //     if (ev.fingerStatus === 'end') {
+    //         angle = angle + ev.rotation;
+    //     }
+    //     result.innerHTML = '你旋转了：' + angle + '°';
+    //     this.style.webkitTransform = 'rotate(' + totalAngle + 'deg)';
+    //     angle = 0;
+    // });
 
 
     /*
      * scale
      */
-    touch.on(target, 'touchstart', function (ev) {
-        ev.preventDefault();
+    touch.on(target, 'touchstart', function (e) {
+        e.preventDefault();
     });
     var initialScale = 1;
     var currentScale;
-    touch.on(target, 'pinchend', function (ev) {
-        currentScale = ev.scale - 1;
+    touch.on(target, 'pinchend', function (e) {
+        if (!touch.config.scale) return false;
+        currentScale = e.pinch - 1;
         currentScale = initialScale + currentScale;
         currentScale = currentScale > 2 ? 2 : currentScale;
         currentScale = currentScale < 1 ? 1 : currentScale;
         this.style.webkitTransform = 'scale(' + currentScale + ')';
         result.innerHTML = "当前缩放比例为:" + currentScale + ".";
     });
-    touch.on(target, 'pinchend', function (ev) {
+    touch.on(target, 'pinchend', function (e) {
+        if (!touch.config.scale) return false;
         initialScale = currentScale;
     });
 
+    /*
+     * drag
+     */
+    // touch.on(target, 'touchstart', function (e) {
+    //     e.preventDefault();
+    // });
+    // var dx, dy;
+    // touch.on(target, 'drag', function (e) {
+    //     if (!touch.config.drag) return false;
+    //     dx = dx || 0;
+    //     dy = dy || 0;
+    //     var offx = dx + e.x + "px";
+    //     var offy = dy + e.y + "px";
+    //     this.style.webkitTransform = "translate3d(" + offx + "," + offy + ",0)";
+    // });
+    // touch.on(target, 'dragend', function (e) {
+    //     if (!touch.config.drag) return false;
+    //     dx += e.x;
+    //     dy += e.y;
+    // });
+
+
+    function reset() {
+        touch.config = config;
+    }
 
 }
