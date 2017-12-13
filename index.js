@@ -11,6 +11,7 @@ window.onload = function () {
         hold: false, //hold事件开关, 默认为true
         holdTime: 650, //hold时间长度
         rotate: false,
+        scale: false,
         swipe: false, //swipe事件开关
         swipeTime: 300, //触发swipe事件的最大时长
         swipeMinDistance: 18, //swipe移动最小距离
@@ -66,7 +67,7 @@ window.onload = function () {
         currentScale = currentScale > 2 ? 2 : currentScale;
         currentScale = currentScale < 1 ? 1 : currentScale;
         this.style.webkitTransform = 'scale(' + currentScale + ')';
-        result.innerHTML = "当前缩放比例为:" + currentScale;
+        result.innerHTML = "当前缩放比例为:" + currentScale + ".";
     });
     touch.on(target, 'pinchend', function (ev) {
         initialScale = currentScale;
