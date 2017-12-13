@@ -64,6 +64,9 @@
 
         #tch-result {
             padding: 0 2rem;
+            height: auto;
+            max-height: 5rem;
+            overflow-y: auto;
             box-sizing: border-box;
         }
     </style>
@@ -81,7 +84,7 @@
     <section>
         <div class="tch-ctrl">
             <ul>
-                <li><a class="active">tap</a></li>
+                <li><a>tap</a></li>
                 <li><a>doubletap</a></li>
                 <li><a>drag</a></li>
             </ul>
@@ -92,7 +95,10 @@
             </ul>
         </div>
     </section>
-    <div id="tch-result">开启tap事件：</div>
+    <section>
+        <div id="tch-event"></div>
+        <div id="tch-result"></div>
+    </section>
     <script src="touch.min.js"></script>
     <script src="index.js"></script>
 </body>
