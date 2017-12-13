@@ -30,8 +30,11 @@ window.onload = function () {
             result.innerHTML = '<p>' + evt + '——' + new Date().getSeconds() + '</p>' + result.innerHTML;
             switch (evt) {
                 case 'rotate':
-                    e.startRotate();
-                    e.preventDefault();
+                    var totalAngle = angle + e.rotation;
+                    if (e.fingerStatus === 'end') {
+                        angle = angle + e.rotation;
+                    }
+                    this.style.webkitTransform = 'rotate(' + totalAngle + 'deg)';
                     break;
             }
         })
