@@ -1,5 +1,5 @@
 window.onload = function () {
-    var target = '#tch-img',
+    var target = '.tch-box',
         btns = document.querySelectorAll('.tch-ctrl li'),
         info = document.getElementById('tch-result');
     touch.config = {
