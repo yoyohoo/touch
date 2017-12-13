@@ -27,17 +27,28 @@ window.onload = function () {
         event.innerText = '开启' + evt + '事件：';
         result.innerHTML = '';
         touch.on(target, evt, function (e) {
+            result.innerHTML = '<p>' + totalAngle + '</p>' + result.innerHTML;
             // result.innerHTML = '<p>' + evt + '——' + new Date().getSeconds() + '</p>' + result.innerHTML;
             switch (evt) {
                 case 'rotate':
-                    var totalAngle = angle + e.rotation;
-                    result.innerHTML = '<p>' + totalAngle + '</p>' + result.innerHTML;
-                    if (e.fingerStatus === 'end') {
-                        angle = angle + e.rotation;
-                    }
-                    this.style.webkitTransform = 'rotate(' + totalAngle + 'deg)';
+
                     break;
             }
         })
     })
+
+    var angle = 0;
+    touch.on(target, 'touchstart', function (ev) {
+        ev.startRotate();
+        ev.preventDefault();
+    });
+    touch.on(target, 'rotate', function (ev) {
+        var totalAngle = angle + ev.rotation;
+        if (ev.fingerStatus === 'end') {
+            angle = angle + ev.rotation;
+        }
+        this.style.webkitTransform = 'rotate(' + totalAngle + 'deg)';
+    });
+
+
 }
