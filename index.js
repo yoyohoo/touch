@@ -63,13 +63,13 @@ window.onload = function () {
             /*
              * scale
              */
-            document.getElementById('tch-img').style.webkitTransition = 'all ease .1s';
+  
             touch.on(target, 'touchstart', function (ev) {
                 ev.preventDefault();
             });
             var initialScale = 1;
             var currentScale = 1;
-            touch.on(target, 'pinchend', function (ev) {
+            touch.on(target, 'pinch', function (ev) {
                 currentScale = ev.scale - 1;
                 currentScale = initialScale + currentScale;
                 currentScale = currentScale > 2 ? 2 : currentScale;
