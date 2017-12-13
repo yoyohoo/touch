@@ -1,4 +1,5 @@
 window.onload = function () {
+        setTimeout(scrollTo, 0, 0, 0);
     var target = '#tch-img',
         event = document.getElementById('tch-event'),
         result = document.getElementById('tch-result');
