@@ -17,6 +17,7 @@
 
         .tch-box {
             width: 100%;
+            height: 200px;
             box-sizing: border-box;
             text-align: center;
         }
@@ -24,6 +25,41 @@
         .tch-box img {
             margin: 0 auto;
             width: 200px;
+        }
+
+        .tch-ctrl {
+            margin: 2rem auto;
+            text-align: center;
+            width: 90%;
+            display: table;
+        }
+
+        .tch-ctrl ul {
+            margin: 0 auto;
+            display: table-row;
+        }
+
+        .tch-ctrl ul li {
+            display: table-cell;
+            padding: .25rem;
+            width: 30%;
+        }
+
+        .tch-ctrl ul li a {
+            width: 80%;
+            display: inline-block;
+            padding: .25rem;
+            border-radius: 2px;
+            border: 1px solid #ccc;
+        }
+
+        .tch-ctrl ul li a.active {
+            background-color: orange;
+            color: #fff;
+        }
+
+        #tch-result {
+            padding: 0 2rem;
         }
     </style>
 </head>
@@ -40,10 +76,18 @@
     <section>
         <div class="tch-ctrl">
             <ul>
-                <li></li>
+                <li><a class="active">tap</a></li>
+                <li><a>doubletap</a></li>
+                <li><a>drag</a></li>
+            </ul>
+            <ul>
+                <li><a>tap</a></li>
+                <li><a>hold</a></li>
+                <li><a>rotate</a></li>
             </ul>
         </div>
     </section>
+    <div id="tch-result"></div>
     <script src="touch.min.js"></script>
     <script src="index.js"></script>
 </body>
