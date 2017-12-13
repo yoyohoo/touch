@@ -26,7 +26,8 @@ window.onload = function () {
         touch.config[evt] = true;
         event.innerText = '开启' + evt + '事件：';
         result.innerHTML = '';
-        touch.trigger(target, evt)
+        angle += Math.floor(Math.random() * 90)
+        touch.trigger(document.getElementById('tch-img'), evt)
     })
 
     var angle = 0;
@@ -35,7 +36,7 @@ window.onload = function () {
         ev.preventDefault();
     });
     touch.on(target, 'rotate', function (ev) {
-        var totalAngle = angle + ev.rotation;
+        var totalAngle = angle + (ev.rotation || 0);
         if (ev.fingerStatus === 'end') {
             angle = angle + ev.rotation;
         }
