@@ -1,7 +1,9 @@
 window.onload = function () {
     var target = '#tch-img',
         btns = document.querySelectorAll('.tch-ctrl li'),
-        info = document.getElementById('tch-result');
+        event = document.getElementById('tch-event'),
+        result = document.getElementById('tch-result');
+
     touch.config = {
         tap: true, //tap类事件开关, 默认为true
         doubleTap: false, //doubleTap事件开关， 默认为true
@@ -17,13 +19,15 @@ window.onload = function () {
 
     document.querySelector('.tch-ctrl').addEventListener('click', function (e) {
         if (e.target.tagName !== 'A') return;
-        document.querySelector('.active').className = '';
+        var actEle = document.querySelector('.active');
+        actEle && (actEle.className = '');
         e.target.className = 'active';
         var evt = e.target.innerText;
         touch.config[evt] = true;
-        info.innerText = '开启' + evt + '事件：';
+        event.innerText = '开启' + evt + '事件：';
+        result.innerHTML = '';
         touch.on(target, evt, function (e) {
-            info.innerText = evt
+            result.innerHTML += '<p>' + evt + '</p>'
         })
     })
 }
