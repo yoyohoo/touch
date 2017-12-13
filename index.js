@@ -23,7 +23,7 @@ window.onload = function () {
         touch.config[evt] = true;
         info.innerText = '开启' + evt + '事件：';
         touch.on(target, evt, function (e) {
-            info.innerText += evt
+            info.innerText = evt
         })
     })
 }
