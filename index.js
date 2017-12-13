@@ -27,7 +27,7 @@ window.onload = function () {
         event.innerText = '开启' + evt + '事件：';
         result.innerHTML = '';
         touch.on(target, evt, function (e) {
-            result.innerHTML = evt + new Date().getSeconds() + '——' + result.innerHTML
+            result.innerHTML = '<p>' + evt + '——' + new Date().getSeconds() + '</p>' + result.innerHTML
         })
     })
 }
