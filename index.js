@@ -1,6 +1,5 @@
 window.onload = function () {
     var target = '#tch-img',
-        btns = document.querySelectorAll('.tch-ctrl li'),
         event = document.getElementById('tch-event'),
         result = document.getElementById('tch-result');
 
@@ -26,15 +25,13 @@ window.onload = function () {
         touch.config[evt] = true;
         event.innerText = '开启' + evt + '事件：';
         result.innerHTML = '';
-        touch.on(target, evt, function (e) {
-            result.innerHTML = '<p>' + totalAngle + '</p>' + result.innerHTML;
-            // result.innerHTML = '<p>' + evt + '——' + new Date().getSeconds() + '</p>' + result.innerHTML;
-            switch (evt) {
-                case 'rotate':
-
-                    break;
-            }
-        })
+        switch (evt) {
+            case 'rotate':
+                var rd = Math.floor(Math.random() * 360);
+                document.getElementById('tch-img').style.webkitTransform = 'rotate(' + (angle + rd) + 'deg)';
+                result.innerHTML = '随机旋转了：' + rd + '°';
+                break;
+        }
     })
 
     var angle = 0;
@@ -47,8 +44,11 @@ window.onload = function () {
         if (ev.fingerStatus === 'end') {
             angle = angle + ev.rotation;
         }
+        result.innerHTML = '你旋转了：' + angle + '°';
         this.style.webkitTransform = 'rotate(' + totalAngle + 'deg)';
     });
+
+
 
 
 }
