@@ -3,7 +3,7 @@ window.onload = function () {
         btns = document.querySelectorAll('.tch-ctrl li'),
         info = document.getElementById('tch-result');
     touch.config = {
-        tap: false, //tap类事件开关, 默认为true
+        tap: true, //tap类事件开关, 默认为true
         doubleTap: false, //doubleTap事件开关， 默认为true
         hold: false, //hold事件开关, 默认为true
         holdTime: 650, //hold时间长度
@@ -20,14 +20,10 @@ window.onload = function () {
         document.querySelector('.active').className = '';
         e.target.className = 'active';
         var evt = e.target.innerText;
+        touch.config[evt] = true;
         info.innerText = '开启' + evt + '事件：';
         touch.on(target, evt, function (e) {
-            alert(evt)
-            console.info(evt)
+            info.innerText += evt
         })
     })
-}
-
-function rotate() {
-
 }
