@@ -63,22 +63,21 @@ window.onload = function () {
             /*
              * scale
              */
-            touch.on(target, 'touchstart', function (e) {
-                e.preventDefault();
+            document.getElementById('tch-img').style.webkitTransition = 'all ease .1s';
+            touch.on(target, 'touchstart', function (ev) {
+                ev.preventDefault();
             });
             var initialScale = 1;
-            var currentScale;
-            touch.on(target, 'pinchend', function (e) {
-                if (!touch.config.scale) return false;
-                currentScale = e.pinch - 1;
+            var currentScale = 1;
+            touch.on(target, 'pinchend', function (ev) {
+                currentScale = ev.scale - 1;
                 currentScale = initialScale + currentScale;
                 currentScale = currentScale > 2 ? 2 : currentScale;
                 currentScale = currentScale < 1 ? 1 : currentScale;
                 this.style.webkitTransform = 'scale(' + currentScale + ')';
-                result.innerHTML = "当前缩放比例为:" + currentScale + ".";
+                log("当前缩放比例为:" + currentScale + ".");
             });
-            touch.on(target, 'pinchend', function (e) {
-                if (!touch.config.scale) return false;
+            touch.on(target, 'pinchend', function (ev) {
                 initialScale = currentScale;
             });
         },
@@ -108,7 +107,7 @@ window.onload = function () {
             /*
              * swipe
              */
-            document.getElementById('tch-img').style.webkitTransition = 'all ease 1s';
+            document.getElementById('tch-img').style.webkitTransition = 'all ease .5s';
             touch.on(target, 'touchstart', function (ev) {
                 ev.preventDefault();
             });
@@ -132,7 +131,7 @@ window.onload = function () {
 
     var config = {
         tap: true, //tap类事件开关, 默认为true
-        doubleTap: false, //doubleTap事件开关， 默认为true
+        doubleTap: true, //doubleTap事件开关， 默认为true
         hold: false, //hold事件开关, 默认为true
         holdTime: 650, //hold时间长度
         rotate: false,
