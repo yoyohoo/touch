@@ -24,9 +24,11 @@
             height: 200px;
             box-sizing: border-box;
             text-align: center;
-            background: url(touch.jpg) no-repeat;
-            background-size: 200px auto;
-            background-position-x: 50%;
+        }
+
+        .tch-box img {
+            margin: 0 auto;
+            width: 200px;
         }
 
         .tch-ctrl {
@@ -62,6 +64,7 @@
 
         #tch-result {
             padding: 0 2rem;
+            box-sizing: border-box;
         }
     </style>
 </head>
@@ -72,7 +75,7 @@
     </nav>
     <section>
         <div class="tch-box">
-            <!-- <img id="tch-img" src="touch.jpg"> -->
+            <img id="tch-img" src="touch.jpg">
         </div>
     </section>
     <section>
