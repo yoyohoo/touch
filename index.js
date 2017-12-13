@@ -1,5 +1,5 @@
 window.onload = function () {
-        setTimeout(scrollTo, 0, 0, 0);
+    setTimeout(scrollTo, 0, 0, 0);
     var target = '#tch-img',
         event = document.getElementById('tch-event'),
         result = document.getElementById('tch-result');
@@ -17,7 +17,7 @@ window.onload = function () {
         pinch: false, //pinch类事件开关
     }
 
-    document.querySelector('.tch-ctrl').addEventListener('click', function (e) {
+    touch.on('.tch-ctrl', 'tap', function (e) {
         if (e.target.tagName !== 'A') return;
         var actEle = document.querySelector('.active');
         actEle && (actEle.className = '');
