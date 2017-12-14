@@ -2,27 +2,36 @@ window.onload = function () {
     setTimeout(scrollTo, 0, 0, 0);
 
     var mTouch = {
+        isInitialed: false,
         init: function () {
             var evt = localStorage.opType;
             if (!evt) return false;
+            if (!this.isInitialed) {
+                touch.on(target, 'touchstart', function (e) {
+                    if (localStorage.opType === 'rotate')
+                        e.startRotate();
+                    e.preventDefault();
+                });
+                this.isInitialed = true;
+            }
+            // touch.off(target, 'touchstart')
             this[evt].call();
         },
         tap: function () {
             /*
              * tap
              */
-
             touch.on(target, 'tap', function (e) {
                 if (!touch.config.tap) return false;
                 result.innerHTML = '你敲击了图片一下';
             });
         },
-        doubleTap: function () {
+        doubletap: function () {
             /*
-             * doubleTap
+             * doubletap
              */
-            touch.on(target, 'doubleTap', function (e) {
-                if (!touch.config.doubleTap) return false;
+            touch.on(target, 'doubletap', function (e) {
+                if (!touch.config.doubletap) return false;
                 result.innerHTML = '你连续敲击了图片两下';
             });
         },
@@ -44,15 +53,13 @@ window.onload = function () {
              * rotate
              */
             var angle = 0;
-            touch.on(target, 'touchstart', function (ev) {
-                ev.startRotate();
-                ev.preventDefault();
-            });
-            touch.on(target, 'rotate', function (ev) {
+            touch.on(target, 'rotate', function (e) {
                 if (!touch.config.rotate) return false;
-                var totalAngle = angle + (ev.rotation || 0);
-                if (ev.fingerStatus === 'end') {
-                    angle = angle + ev.rotation;
+                if (localStorage.opType !== 'rotate') return false;
+
+                var totalAngle = angle + (e.rotation || 0);
+                if (e.fingerStatus === 'end') {
+                    angle = angle + e.rotation;
                 }
                 result.innerHTML = '你旋转了：' + angle + '°';
                 this.style.webkitTransform = 'rotate(' + totalAngle + 'deg)';
@@ -63,21 +70,20 @@ window.onload = function () {
             /*
              * scale
              */
-  
-            touch.on(target, 'touchstart', function (ev) {
-                ev.preventDefault();
-            });
+            document.getElementById('tch-img').style.webkitTransition = 'all ease .1s';
             var initialScale = 1;
             var currentScale = 1;
-            touch.on(target, 'pinch', function (ev) {
-                currentScale = ev.scale - 1;
+            touch.on(target, 'pinch', function (e) {
+                if (!touch.config.scale) return false;
+                currentScale = e.scale - 1;
                 currentScale = initialScale + currentScale;
                 currentScale = currentScale > 2 ? 2 : currentScale;
                 currentScale = currentScale < 1 ? 1 : currentScale;
                 this.style.webkitTransform = 'scale(' + currentScale + ')';
-                log("当前缩放比例为:" + currentScale + ".");
+                result.innerHTML = "当前缩放比例为:" + currentScale + ".";
             });
-            touch.on(target, 'pinchend', function (ev) {
+            touch.on(target, 'pinchend', function (e) {
+                if (!touch.config.scale) return false;
                 initialScale = currentScale;
             });
         },
@@ -85,22 +91,25 @@ window.onload = function () {
             /*
              * drag
              */
-            touch.on(target, 'touchstart', function (e) {
-                e.preventDefault();
-            });
             var dx, dy;
             touch.on(target, 'drag', function (e) {
                 if (!touch.config.drag) return false;
+                if (localStorage.opType !== 'drag') return false;
+
                 dx = dx || 0;
                 dy = dy || 0;
                 var offx = dx + e.x + "px";
                 var offy = dy + e.y + "px";
                 this.style.webkitTransform = "translate3d(" + offx + "," + offy + ",0)";
+                result.innerHTML = '开始拖拉...';
             });
             touch.on(target, 'dragend', function (e) {
                 if (!touch.config.drag) return false;
+                if (localStorage.opType !== 'drag') return false;
+
                 dx += e.x;
                 dy += e.y;
+                result.innerHTML = '拖拉位移：' + '(' + dx + ',' + dy + ')';
             });
         },
         swipe: function () {
@@ -108,16 +117,17 @@ window.onload = function () {
              * swipe
              */
             document.getElementById('tch-img').style.webkitTransition = 'all ease .5s';
-            touch.on(target, 'touchstart', function (ev) {
-                ev.preventDefault();
-            });
-            touch.on(target, 'swiperight', function (ev) {
-                if (!touch.config.swipe) return false;
+            touch.on(target, 'swiperight', function (e) {
+                if (!touch.config.swipe) return;
+                if (localStorage.opType !== 'swipe') return false;
+
                 this.style.webkitTransform = "translate3d(" + this.offsetLeft + "px,0,0)";
                 result.innerHTML = "向右滑动：" + this.offsetLeft;
             });
-            touch.on(target, 'swipeleft', function (ev) {
+            touch.on(target, 'swipeleft', function (e) {
                 if (!touch.config.swipe) return false;
+                if (localStorage.opType !== 'swipe') return false;
+
                 this.style.webkitTransform = "translate3d(-" + this.offsetLeft + "px,0,0)";
                 result.innerHTML = "向左滑动：" + this.offsetLeft;
             });
@@ -131,7 +141,7 @@ window.onload = function () {
 
     var config = {
         tap: true, //tap类事件开关, 默认为true
-        doubleTap: true, //doubleTap事件开关， 默认为true
+        doubletap: false, //doubletap事件开关， 默认为true
         hold: false, //hold事件开关, 默认为true
         holdTime: 650, //hold时间长度
         rotate: false,
