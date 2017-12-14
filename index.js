@@ -1,5 +1,9 @@
 window.onload = function () {
     setTimeout(scrollTo, 0, 0, 0);
+    var isWeixin = ua.indexOf('micromessenger') != -1;
+    if (isWeixin) {
+        document.querySelector('nav').style.display = 'none';
+    }
 
     var mTouch = {
         isInitialed: false,
