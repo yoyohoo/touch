@@ -12,7 +12,7 @@
         }
 
         nav h3 {
-            background-color: orange;
+            background-color: #333;
             line-height: 3rem;
             color: #fff;
             font-size: 1rem;
@@ -61,7 +61,7 @@
         }
 
         .tch-ctrl ul li a.active {
-            background-color: orange;
+            background-color: #ff7700;
             color: #fff;
         }
 
@@ -88,7 +88,7 @@
             border-radius: .25rem;
             display: inline-block;
             width: 100%;
-            background-color: orange;
+            background-color: #ff7700;
             color: #fff;
         }
     </style>
@@ -106,14 +106,19 @@
     <section>
         <div class="tch-ctrl">
             <ul>
-                <li><a>scale</a></li>
-                <li><a>doubleTap</a></li>
+                <li><a>tap</a></li>
+                <li><a>doubletap</a></li>
                 <li><a>swipe</a></li>
             </ul>
             <ul>
                 <li><a>drag</a></li>
                 <li><a>hold</a></li>
                 <li><a>rotate</a></li>
+            </ul>
+            <ul>
+                <li><a>scale</a></li>
+                <li></li>
+                <li></li>
             </ul>
         </div>
         <div id="tch-reload">
@@ -124,7 +129,7 @@
         <div id="tch-event"></div>
         <div id="tch-result"></div>
     </section>
-    <script src="touch.min.js"></script>
+    <script src="touch.js"></script>
     <script src="index.js"></script>
 </body>
 
